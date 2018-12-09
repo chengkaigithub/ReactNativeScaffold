@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
-    "fixReactViro": "find ./node_modules/react-viro/components -type f -exec sed -i '' 's#^import normalizeColor from \"react-native/Libraries/StyleSheet/normalizeColor\"#// import normalizeColor from \"react-native/Libraries/StyleSheet/normalizeColor\"#g' {} \\;",
-    "postinstall": "yarn run fixReactViro"
+    "test": "jest"
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.0",
