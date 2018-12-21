@@ -9,33 +9,33 @@ const Picker = Platform.OS === 'ios' ? PickerIOS : PickerAndroid;
 const PickerItem = Picker.Item;
 
 export default class RncPicker extends Component {
-	state = {
-		language: 'js'
-	}
+  state = {
+    language: 'js'
+  }
 
-	static propTypes = {
-		data: PropTypes.array.isRequired,
-	}
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+  }
 
-	_renderItem = () => {
-		const { data } = this.props;
+  _renderItem = () => {
+    const { data } = this.props;
 
-		return data.map((item, index) => (
-			<PickerItem
-				key={index}
-				label={item.label}
-				value={item.value}
-			/>
-		));
-	}
+    return data.map((item, index) => (
+      <PickerItem
+        key={index}
+        label={item.label}
+        value={item.value}
+      />
+    ));
+  }
 
-	render() {
-		return (
-			<Picker
-				selectedValue={this.state.language}
-				onValueChange={this.props.onChange}>
-				{ this._renderItem() }
-			</Picker>
-		);
-	}
+  render() {
+    return (
+      <Picker
+        selectedValue={this.state.language}
+        onValueChange={this.props.onChange}>
+        {this._renderItem()}
+      </Picker>
+    );
+  }
 }

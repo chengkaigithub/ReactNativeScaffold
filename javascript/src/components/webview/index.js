@@ -25,41 +25,45 @@ const injectJsStr = `
 `;
 
 export default class WebView extends Component {
-    static defaultProps = {
-        onMessageBridge: () => {}
+  static defaultProps = {
+    onMessageBridge: () => {
     }
+  }
 
-    onMessage = e => {
-        try {
-            const { params, __callback, __webview_flag } = JSON.parse(e.nativeEvent.data);
+  onMessage = e => {
+    try {
+      const { params, __callback, __webview_flag } = JSON.parse(e.nativeEvent.data);
 
-            if (__webview_flag === '__webview_flag') {
-                if(__callback) {
-                    this.props.onMessageBridge(params, data => {
-                        this.webRef.injectJavaScript(`
+      if (__webview_flag === '__webview_flag') {
+        if (__callback) {
+          this.props.onMessageBridge(params, data => {
+            this.webRef.injectJavaScript(`
                             ${__callback}(${JSON.stringify(data)});
                             delete window.${__callback};
                         `);
-                    });
-                    return;
-                }
-                this.props.onMessageBridge(params, () => { });
-            }
-        } catch(err) {
-            this.props.onMessageBridge(e, () => {});
+          });
+          return;
         }
-
-        this.props.onMessageBridge(e, () => {});
+        this.props.onMessageBridge(params, () => {
+        });
+      }
+    } catch (err) {
+      this.props.onMessageBridge(e, () => {
+      });
     }
 
-    render() {
-        return (
-            <RNWebView
-                {...this.props}
-                ref={ref => this.webRef = ref}
-                injectedJavaScript={injectJsStr}
-                onMessage={this.onMessage}
-            />
-        );
-    }
+    this.props.onMessageBridge(e, () => {
+    });
+  }
+
+  render() {
+    return (
+      <RNWebView
+        {...this.props}
+        ref={ref => this.webRef = ref}
+        injectedJavaScript={injectJsStr}
+        onMessage={this.onMessage}
+      />
+    );
+  }
 }

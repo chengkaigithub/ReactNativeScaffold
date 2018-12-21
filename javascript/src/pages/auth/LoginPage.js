@@ -19,7 +19,7 @@ import { deviceWidth, isIphoneX } from "../../utils/ScreenUtil";
 import { px } from "../../components/screen-utils";
 import UserUseAgreement from "./UserUseAgreement";
 import { connect } from "react-redux";
-import { RESULT_OK } from "react-native-navigation-hybrid";
+import { BarStyleDarkContent, RESULT_OK } from "react-native-navigation-hybrid";
 import { showToast } from "../../utils/ToastUtil";
 import Actions from "../../redux-source/actions";
 
@@ -28,6 +28,8 @@ import Actions from "../../redux-source/actions";
 export default class LoginPage extends Component {
   static navigationItem = {
     topBarHidden: true,
+    topBarStyle: BarStyleDarkContent,
+    topBarTintColor: '#000000',
   }
 
   constructor(props) {
@@ -65,6 +67,8 @@ export default class LoginPage extends Component {
             source={require('../../assets/images/common/refresh.png')}
           />
           <TextInputItem
+            hintTitle="手机号"
+            styleType={TextInputItem.styleType.DARK}
             style={styles.textInputStyle}
             containerStyle={styles.textInputContainerStyle}
             placeholder={PLEASE_INPUT_PHONE_NUMBER}
@@ -74,6 +78,8 @@ export default class LoginPage extends Component {
             onChangeText={(text) => {
             }}/>
           <TextInputItem
+            hintTitle="短信验证码"
+            styleType={TextInputItem.styleType.DARK}
             _ref={ref => this.textInputItem = ref}
             onVerifySendSuccess={this.onVerifySendSuccess}
             style={styles.textInputStyle}
@@ -92,11 +98,11 @@ export default class LoginPage extends Component {
             {BACK}
           </Button>
           <View style={styles.bottomViewContainer}>
-            <Text style={{ color: theme.GRAY_FONT_COLOR, fontSize: px(24) }}>
+            <Text style={{ color: theme.DARK_COLOR_LEVEL_3, fontSize: px(24) }}>
               {CLICK_LOGIN_TO_EXPRESS_YOUR_CONSENT}
             </Text>
             <TouchableOpacity onPress={this.jumpToAgreement}>
-              <Text style={{ color: theme.BASE_COLOR, fontSize: px(24) }}>
+              <Text style={{ color: theme.COLOR_PRIMARY, fontSize: px(24) }}>
                 {USER_AGREEMENT}
               </Text>
             </TouchableOpacity>

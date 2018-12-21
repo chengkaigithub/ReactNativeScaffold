@@ -8,9 +8,9 @@ import Icon from '../icon';
  * @type {object}
  */
 export const IconPropTypes = PropTypes.oneOfType([
-	PropTypes.string,
-	PropTypes.element,
-	PropTypes.shape(Icon.propTypes),
+  PropTypes.string,
+  PropTypes.element,
+  PropTypes.shape(Icon.propTypes),
 ]);
 
 /**
@@ -19,15 +19,15 @@ export const IconPropTypes = PropTypes.oneOfType([
  * @return {element} Icon 元素
  */
 export const getIconElement = (iconProps, color) => {
-	if (typeof iconProps === 'string') {
-		return <Icon name={iconProps} color={color}/>;
-	} else if(React.isValidElement(iconProps)) {
-		return iconProps;
-	} else if(typeof iconProps === 'object') {
-		return <Icon color={color} {...iconProps}/>;
-	} else if(!iconProps) {
-		return null;
-	} else {
-		console.error('icon type error!');
-	}
+  if (typeof iconProps === 'string') {
+    return <Icon name={iconProps} color={color}/>;
+  } else if (React.isValidElement(iconProps)) {
+    return iconProps;
+  } else if (typeof iconProps === 'object') {
+    return <Icon color={color} {...iconProps}/>;
+  } else if (!iconProps) {
+    return null;
+  } else {
+    console.error('icon type error!');
+  }
 }

@@ -5,6 +5,9 @@
 import React, { cloneElement, Component } from 'react';
 import { AppRegistry, DeviceEventEmitter, View } from 'react-native';
 
+let topViewAddListener;
+let topViewRemoveListener;
+
 class TopView extends Component {
   // 构造
   constructor(props) {
@@ -13,18 +16,16 @@ class TopView extends Component {
     this.state = {
       element: {}
     };
+
+    topViewAddListener = DeviceEventEmitter.addListener('topViewAdd', e => this.setTopView(...e));
+    topViewRemoveListener = DeviceEventEmitter.addListener('topViewRemove', this.removeTopView);
   }
 
-  componentDidMount() {
-    DeviceEventEmitter.addListener('topViewAdd', e => this.setTopView(...e));
-    DeviceEventEmitter.addListener('topViewRemove', this.removeTopView);
+  componentWillUnmount() {
+    topViewAddListener && topViewAddListener.remove();
+    topViewRemoveListener && topViewRemoveListener.remove();
+    this.setState = (state, callback) => {return undefined;};
   }
-
-  // FIXME 需要适当的时机
-  // componentWillUnmount() {
-  //   DeviceEventEmitter.removeAllListeners('topViewAdd');
-  //   DeviceEventEmitter.removeAllListeners('topViewRemove');
-  // }
 
   setTopView = (e, key) => {
     if (React.isValidElement(e)) {
@@ -60,10 +61,10 @@ const maskStyle = {
   }
 }
 
-const originRegisterComponent = AppRegistry.registerComponent;
+let originRegisterComponent = AppRegistry.registerComponent;
 
 AppRegistry.registerComponent = function (element, func) {
-  const reg = func();
+  var reg = func();
   return originRegisterComponent(element, function () {
     return class Comps extends Component {
       render() {

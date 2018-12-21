@@ -1,4 +1,3 @@
-export { default as ScreenUtils } from './screen-utils';
 export { default as Text } from './text';
 export { default as View } from './view';
 export { default as Image } from './image';
@@ -27,3 +26,4 @@ export { default as Loading } from './LoadingUI';
 export { default as PageLoading } from './page-loading';
 export { default as DismissKeyboardTouchable } from './dismiss-keyboard-touchable';
 export { default as AlertModal } from './native-alert-dialog';
+export { default as Line } from './interval-line';

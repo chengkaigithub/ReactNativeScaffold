@@ -2,7 +2,7 @@
  * 屏幕适配工具类
  */
 
-import { Dimensions, PixelRatio, StatusBar } from 'react-native';
+import { Dimensions, PixelRatio, StatusBar, StyleSheet } from 'react-native';
 
 import * as theme from '../config/theme.conf';
 import { PHONE_SYSTEM_VERSION } from "../config/app.conf";
@@ -22,7 +22,20 @@ export const dpr = PixelRatio.get();
  * @param  {Number} width 设计像素
  * @return {Number}       实际像素
  */
-export const px = width => Math.floor(deviceWidth / theme.BASE_WIDTH * width);
+export const px = width => {
+  if (width === 1) {
+    return StyleSheet.hairlineWidth;
+  }
+
+  return Math.floor(deviceWidth / theme.BASE_WIDTH * width);
+};
+
+export const hpx = height => {
+  if (height === 1) {
+    return StyleSheet.hairlineWidth;
+  }
+  return Math.floor(deviceHeight / theme.BASE_HEIGHT * height);
+}
 
 export const isMinScreen = () => deviceWidth === 320;
 
@@ -30,15 +43,23 @@ export const isMinScreen = () => deviceWidth === 320;
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
 
+/* iPhoneX MAX 屏幕大小 */
+const X_WIDTH_MAX = 414;
+const X_HEIGHT_MAX = 896;
+
 /**
  * 判断是否为iphoneX
  * @return {boolean}
  */
 export const isIphoneX = () => {
   return (
-    IS_IOS_OS &&
-    ((deviceWidth === X_WIDTH && deviceHeight === X_HEIGHT) ||
-      (deviceWidth === X_HEIGHT && deviceHeight === X_WIDTH))
+    IS_IOS_OS && (
+      (deviceWidth === X_WIDTH && deviceHeight === X_HEIGHT) ||
+      (deviceWidth === X_HEIGHT && deviceHeight === X_WIDTH)
+    ) || (
+      (deviceWidth === X_WIDTH_MAX && deviceHeight === X_HEIGHT_MAX) ||
+      (deviceWidth === X_HEIGHT_MAX && deviceHeight === X_WIDTH_MAX)
+    )
   );
 };
 

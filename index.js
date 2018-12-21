@@ -15,7 +15,8 @@ import { store } from './javascript/src/redux-source';
 // 配置全局样式
 Garden.setStyle({
   topBarStyle: BarStyleLightContent,
-  topBarColor: theme.BASE_COLOR,
+  topBarColor: theme.COLOR_PRIMARY,
+
   screenBackgroundColor: '#f8f8f8', // 默认页面的背景色, 自定义路由界面的背景色需要自行界面设置
   // statusBarColorAndroid: '#00fff0', // android 5.0
   hideBackTitleIOS: true,
@@ -29,7 +30,8 @@ Garden.setStyle({
   swipeBackEnabledAndroid: true,
   topBarShadowHidden: true,
   tabBarItemColor: theme.TAB_TINT_COLOR,
-  tabBarSelectedItemColor: theme.BASE_COLOR
+  tabBarSelectedItemColor: theme.COLOR_PRIMARY,
+
 });
 
 // 重要必须

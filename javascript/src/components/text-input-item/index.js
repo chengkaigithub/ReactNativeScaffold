@@ -2,12 +2,21 @@
  * Created by chengkai on 2017/11/28.
  */
 import React, { Component } from 'react';
-import { Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types';
 import { px } from '../../utils/ScreenUtil';
 import * as theme from '../../config/theme.conf';
 import VerifyCodeButton from '../verify-code-button';
+import Line from '../interval-line';
 import { PHONE_IMEI } from "../../config/app.conf";
+import styles from './styles';
+
+const emptyMethod = () => {
+};
+const styleTypeEnum = {
+  LIGHT: 'LIGHT',
+  DARK: 'DARK'
+}
 
 export default class TextInputItem extends Component {
 
@@ -31,6 +40,34 @@ export default class TextInputItem extends Component {
     onVerifyButtonClick: PropTypes.func, /* 点击验证码按钮回调 */
     onVerifySendSuccess: PropTypes.func, /* 验证码发送成功后回调 */
     isAutoHandleSendSMS: PropTypes.bool, /* 是否自动处理发送短信验证码事件 */
+    styleType: PropTypes.string, /* [ DARK / LIGHT ] */
+  }
+
+  static defaultProps = {
+    hintTitle: '',
+    placeholder: '',
+    type: 'default',
+    onChangeText: emptyMethod,
+    containerStyle: {},
+    inputStyle: {},
+    titleStyle: {},
+    isShowExpress: false,
+    isShowVerifiyCode: false,
+    isShowPicVerifiyCode: false,
+
+    picVerifyCodeUrl: '',
+    picVerifyCodeClick: emptyMethod,
+    picVerifyCodeStyle: styles.picVerifyCodeStyle,
+
+    phoneNo: '',
+    verifyCodeUrl: '',
+    smsType: '',
+    isSendOnRender: false,
+    onVerifyButtonClick: emptyMethod,
+    onVerifySendSuccess: emptyMethod,
+    isAutoHandleSendSMS: true,
+
+    styleType: styleTypeEnum.LIGHT
   }
 
   state = {
@@ -69,10 +106,8 @@ export default class TextInputItem extends Component {
       verifyCodeUrl,
       smsType,
       isSendOnRender,
-      onVerifyButtonClick = () => {
-      },
-      onVerifySendSuccess = () => {
-      },
+      onVerifyButtonClick,
+      onVerifySendSuccess,
       isAutoHandleSendSMS = true,
     } = this.props;
 
@@ -80,6 +115,7 @@ export default class TextInputItem extends Component {
 
     return (
       <VerifyCodeButton
+        style={styles.verifyButtonStyle}
         _ref={ref => this.verifyCodeBtn = ref}
         onButtonClick={onVerifyButtonClick}
         onVerifySendSuccess={onVerifySendSuccess}
@@ -95,13 +131,7 @@ export default class TextInputItem extends Component {
    *  渲染 图形验证码组件
    */
   renderPicVerifiyCode = () => {
-    let {
-      isShowPicVerifiyCode = false,
-      picVerifyCodeUrl = '',
-      picVerifyCodeClick = () => {
-      },
-      picVerifyCodeStyle = styles.picVerifyCodeStyle,
-    } = this.props;
+    const { isShowPicVerifiyCode, picVerifyCodeUrl, picVerifyCodeClick, picVerifyCodeStyle, styleType } = this.props;
 
     if (!isShowPicVerifiyCode) return null;
 
@@ -109,6 +139,8 @@ export default class TextInputItem extends Component {
       <TouchableOpacity activeOpacity={0.5} onPress={picVerifyCodeClick}>
         <ImageBackground resizeMode="contain" style={styles.picVerifyCodeContainerStyle}
                          source={require('../../assets/images/common/refresh.png')}>
+          <Line direction={Line.vertical}
+                backgroundColor={styleType === styleTypeEnum.LIGHT ? theme.LINE_COLOR : theme.COLOR_WHITE}/>
           <Image resizeMode="cover" style={picVerifyCodeStyle}
                  source={{ uri: picVerifyCodeUrl, headers: { 'imei': PHONE_IMEI } }}/>
         </ImageBackground>
@@ -131,8 +163,7 @@ export default class TextInputItem extends Component {
 
   componentDidMount() {
     const {
-      _ref = () => {
-      }
+      _ref = emptyMethod
     } = this.props;
     _ref({
       focus: () => this.focus(),
@@ -142,35 +173,38 @@ export default class TextInputItem extends Component {
 
   render() {
     const {
-      hintTitle = '',
-      placeholder = '',
-      type = 'default',
-      onChangeText = () => {
-      },
-      containerStyle = {},
-      inputStyle = {},
-      titleStyle = {},
-      isShowExpress = false,
-      isShowVerifiyCode = false,
-      isShowPicVerifiyCode = false,
+      styleType,
+      hintTitle,
+      placeholder,
+      type,
+      onChangeText,
+      containerStyle,
+      inputStyle,
+      titleStyle,
+      isShowExpress,
+      isShowVerifiyCode,
+      isShowPicVerifiyCode,
       ...otherProps
     } = this.props;
 
-    let isExproess = this.state.isExpress;
-    let ExpressComponent = isShowExpress ? this.renderExpress() : null;
-    let VerifiyCodeComponent = isShowVerifiyCode ? this.renderVerifiyCode() : null;
-    let picVerifiyCodeComponent = isShowPicVerifiyCode ? this.renderPicVerifiyCode() : null;
+    const isExproess = this.state.isExpress;
+    const ExpressComponent = isShowExpress ? this.renderExpress() : null;
+    const VerifiyCodeComponent = isShowVerifiyCode ? this.renderVerifiyCode() : null;
+    const picVerifiyCodeComponent = isShowPicVerifiyCode ? this.renderPicVerifiyCode() : null;
+    const inputItemDarkStyle = styleType === styleTypeEnum.LIGHT ? null : styles.inputItemDarkStyle;
 
     return (
-      <View style={[styles.inputItemStyle, containerStyle]}>
-        <Text style={[styles.hintTitleStyle, titleStyle]}>{hintTitle}</Text>
+      <View style={[styles.inputItemStyle, inputItemDarkStyle, containerStyle]}>
+        <View style={{ paddingLeft: px(31), width: px(hintTitle ? px(452) : 0) }}>
+          <Text style={[styles.hintTitleStyle, titleStyle]}>{hintTitle}</Text>
+        </View>
         <TextInput
           ref={ref => this.textInput = ref}
           style={[styles.textInputStyle, { marginLeft: hintTitle === '' ? 0 : px(30) }, inputStyle]}
           onChangeText={(text) => onChangeText(text)}
           clearButtonMode="while-editing"
           underlineColorAndroid='transparent'
-          placeholderTextColor={theme.GRAY_FONT_COLOR}
+          placeholderTextColor={theme.TAB_TINT_COLOR}
           placeholder={placeholder}
           keyboardType={type}
           secureTextEntry={isShowExpress && isExproess}
@@ -184,38 +218,4 @@ export default class TextInputItem extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  inputItemStyle: {
-    flexDirection: 'row',
-    height: px(90),
-    borderBottomWidth: px(1),
-    borderBottomColor: '#EDEDED',
-    marginLeft: px(87),
-    marginRight: px(87),
-    marginTop: 0,
-    marginBottom: 0,
-    alignItems: 'center',
-    borderBottomWidth: 1
-  },
-  hintTitleStyle: {
-    fontSize: px(26),
-  },
-  textInputStyle: {
-    flex: 1,
-    borderWidth: 0,
-    borderColor: 'transparent',
-    fontSize: px(26),
-  },
-  picVerifyCodeContainerStyle: {
-    width: px(110),
-    height: px(46),
-  },
-  picVerifyCodeStyle: {
-    width: px(110),
-    height: px(46),
-  },
-  expressStyle: {
-    width: px(40),
-    height: px(40),
-  }
-});
+TextInputItem.styleType = styleTypeEnum;

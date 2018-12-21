@@ -27,6 +27,7 @@ export default class VerifyCodeButton extends Component {
     onButtonClick: PropTypes.func, /* 点击按钮之后的回调 */
     onVerifySendSuccess: PropTypes.func, /* 验证码发送成功之后的回调 */
     isAutoHandleSendSMS: PropTypes.bool, /* 是否自动处理发送短信事件 */
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]), /* 是否自动处理发送短信事件 */
   }
   static defaultProps = {
     isAutoHandleSendSMS: true,
@@ -103,17 +104,17 @@ export default class VerifyCodeButton extends Component {
     } = this.props;
 
     showLoading();
-    this.props.$fetch.post(verifyCodeUrl, {smsType, phoneNo})
-        .then((data) => {
-            hideToast();
-            this.processVerifyData(data);
-        }).catch(() => {
+    this.props.$fetch.post(verifyCodeUrl, { smsType, phoneNo })
+      .then((data) => {
         hideToast();
-        showToast('验证码发送失败，请重新获取！', 1);
-        this.setState({
-            verifyBtnDisabled: false,
-            verifyMsg: '重新获取',
-        });
+        this.processVerifyData(data);
+      }).catch(() => {
+      hideToast();
+      showToast('验证码发送失败，请重新获取！', 1);
+      this.setState({
+        verifyBtnDisabled: false,
+        verifyMsg: '重新获取',
+      });
     });
   }
   /**
@@ -123,7 +124,8 @@ export default class VerifyCodeButton extends Component {
   processVerifyData = (data) => {
     if (data.success) {
       let {
-        onVerifySendSuccess = () => {}
+        onVerifySendSuccess = () => {
+        }
       } = this.props;
       onVerifySendSuccess();
       showToast('验证码发送成功！', 1);
@@ -170,7 +172,8 @@ export default class VerifyCodeButton extends Component {
       this.handleGetVerifyCodeClick();
     }
     const {
-      _ref = () => {}
+      _ref = () => {
+      }
     } = this.props;
     _ref({
       sendSMSVerifyCode: this._sendSMSVerifyCode
@@ -187,17 +190,14 @@ export default class VerifyCodeButton extends Component {
   }
 
   render() {
-    let {
-      verifyBtnDisabled,
-      verifyTimer,
-      verifyMsg,
-    } = this.state;
+    const { style } = this.props;
+    const { verifyBtnDisabled, verifyTimer, verifyMsg } = this.state;
     return (
-      <View style={styles.verifyExtra}>
+      <View style={[styles.verifyExtra, style]}>
         <TouchableOpacity
           onPress={this.handleGetVerifyCodeClick}
           disabled={verifyBtnDisabled}>
-          <Text style={{ color: theme.BASE_COLOR }}>
+          <Text style={{ color: theme.COLOR_PRIMARY }}>
             {verifyTimer > 0 ? `重新获取(${verifyTimer})` : verifyMsg}
           </Text>
         </TouchableOpacity>
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     borderWidth: 1.2,
-    borderColor: theme.BASE_COLOR,
+    borderColor: theme.COLOR_PRIMARY,
     borderRadius: 4,
     backgroundColor: 'white',
   },

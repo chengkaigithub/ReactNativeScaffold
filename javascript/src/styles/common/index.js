@@ -9,7 +9,7 @@ export default StyleSheet.create({
     color: "#108ee9"
   },
   disabledLink: {
-    color: theme.GRAY_FONT_COLOR,
+    color: theme.DARK_COLOR_LEVEL_3,
   },
   pageView: {
     flex: 1,

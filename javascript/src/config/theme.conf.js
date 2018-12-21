@@ -2,77 +2,62 @@
  * 项目主题配置
  */
 
-/* 屏幕基准宽度（设计稿的宽度） */
-export const BASE_WIDTH = 750;
+export const COLOR_WHITE = '#FFFFFF';
 
+/*********************************************************** 新UI规范 ***************************************************/
+
+/* status bar config start */
 export const X_STATUS_BAR_HEIGHT = 44;
-
 export const STATUS_BAR_HEIGHT = 20;
+/* status bar config end*/
 
-/* 主题颜色 */
-export const BASE_COLOR = '#4D7BFE';
+/* page config start */
+export const BASE_WIDTH = 750;                          // 屏幕基准宽度（设计稿的宽度）
+export const BASE_HEIGHT = 1334;                        // 屏幕基准高度（设计稿的高度）
+export const SEPARATE_BLOCK_HEIGHT = 20;                // 分隔块高度
+export const COLOR_PRIMARY = '#4C7BFE';
+export const VIP_GOLD = '#D3AA59';
+export const CYAN_BLUE = '#00C9C8';
+export const HINT_PINK = '#FF2D55';
+export const DARK_COLOR_LEVEL_1 = '#333333';
+export const DARK_COLOR_LEVEL_2 = '#666666';
+export const DARK_COLOR_LEVEL_3 = '#BBBBBB';
+export const DARK_COLOR_LEVEL_4 = '#F1F1F1';
+export const DARK_COLOR_LEVEL_5 = '#F5F5F5';
 
-/* 首页Tab图标及字体颜色（未选中） */
-export const TAB_TINT_COLOR = '#999999';
+export const FONT_SIZE_SUPER_LARGE = 50;
+export const FONT_SIZE_LARGE = 32;
+export const FONT_SIZE_SMALL = 28;
+export const FONT_SIZE_SUPER_SMALL = 24;
 
-/* 首页Tab图标及字体颜色（选中） */
-export const TAB_TINT_COLOR_ACTIVE = '#4D7BFE';
+export const BUTTON_WIDTH = 694;
+export const BUTTON_HEIGHT = 94;
+export const LINE_COLOR = DARK_COLOR_LEVEL_5;
 
-/* 默认字体颜色 */
-export const BASE_FONT_COLOR = '#666';
+export const PAGE_BG_COLOR = '#F5F5F5';                  // 页面背景色
 
-export const FONT_LIGHT_COLOR = '#888888';
+export const PAGE_LINE_COLOR = '#EDEDED';                // 页面线条颜色
 
-export const GRAY_COLOR_AAA = '#AAAAAA';
+/* page config end */
 
-/* 灰色字体颜色 */
-export const GRAY_FONT_COLOR = '#cdcdcd';
+/* nav bar config start */
+export const NAV_BAR_TITLE_COLOR = DARK_COLOR_LEVEL_2;   // navBar 文字颜色
+export const NAV_BAR_BG_COLOR = COLOR_PRIMARY;           // navBar 背景色
+/* navbar config end */
 
-/* 默认字体大小 */
-export const BASE_FONT_SIZE = 28;
+/* tab config start */
+export const TAB_TINT_COLOR = '#999999';                    // 首页Tab图标及字体颜色（未选中）
+export const TAB_TINT_COLOR_ACTIVE = COLOR_PRIMARY;      // 首页Tab图标及字体颜色（选中）
+export const STATUS_BAR_BG_COLOR = '#F0F0F0';            // status bar颜色
+/* tab config end */
 
-/* 默认字体行高 */
-export const BASE_FONT_HEIGHT = 34;
+/* topBar start */
 
-/* navBar 背景色 */
-export const NAVBAR_BG_COLOR = '#4d7bfe';
+/* topBar end */
 
-/* status bar颜色 */
-export const STATUS_BAR_BG_COLOR = '#F0F0F0';
+/* bottom bar start */
 
-/* navBar 文字颜色 */
-export const NAVBAR_TITLE_COLOR = '#666';
+/* bottom bar end */
 
-/* SearchBar 背景色 */
-export const SEARCHBAR_BG_COLOR = '#efeff4';
+/*********************************************************** 新UI规范 ***************************************************/
 
-/* 页面背景色 */
-export const PAGE_BG_COLOR = '#F5F5F5';
-
-/* 页面线条颜色 */
-export const PAGE_LINE_COLOR = '#ededed';
-
-/* 浅橘色 */
-export const COLOR_LIGHT_ORANGE = '#FC8E6B';
-
-export const COLOR_WHITE = 'white';
-
-export const COLOR_BLACK = 'black';
-
-export const COLOR_LIGHT_BLUE = '#5598f5';
-
-export const COLOR_WATHET_BLUE = '#CFE1FF';
-
-export const COLOR_LIGHT_BLACK = '#3B3B3B';
-
-export const COLOR_TAB_BAR_BLUE = '#4D7BFE';
-
-export const COLOR_DEEP_BLUE = '#183C91';
-
-export const COLOR_BLUE_GRAY = '#F4F8FF';
-
-export const BLACK_FONT_COLOR = '#3A3A3A';
-
-export const TIP_FONT_COLOR = '#AFAFAF';
-
-export const COLOR_GRAY_F6 = '#F6F6F6';

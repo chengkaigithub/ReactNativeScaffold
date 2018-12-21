@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TouchableHighlight, View, ViewStyle, } from 'react-native';
-import normalizeColor from 'normalize-css-color';
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import normalizeColor from 'react-native/Libraries/Color/normalizeColor';
 import setNormalizedColorAlpha from 'react-native/Libraries/StyleSheet/setNormalizedColorAlpha';
 
 import AndroidStyle from './style';
@@ -83,7 +83,7 @@ export default class SegmentedControl extends React.Component {
         <TouchableHighlight
           disabled={disabled}
           key={idx}
-          onPress={(e?: any) => this.onPress(e, idx, value)}
+          onPress={(e ? : any) => this.onPress(e, idx, value)}
           underlayColor={underlayColor}
           style={itemStyle}
           activeOpacity={1}

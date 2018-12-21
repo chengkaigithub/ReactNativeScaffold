@@ -1,3 +1,3 @@
 export default {
-	themeColor: '#108ee9',
+  themeColor: '#108ee9',
 }

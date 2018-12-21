@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, WebView } from 'react-native';
 import { EMPTY_STRING, H5_LOAD_ERROR_HINT } from '../../config/string.conf';
 import * as theme from "../../config/theme.conf";
-import { hideToast, showLoading } from "../../utils/ToastUtil";
+// import { hideToast, showLoading } from "../../utils/ToastUtil";
 import { px } from "../../utils/ScreenUtil";
 import fontUri from "../../utils/FontUtil";
 import { event } from '../../components'
@@ -40,8 +40,8 @@ export default class CommonWebView extends Component {
       this.mWebView.goBack();
       return true;
     } else {
-      // this.props.navigator.pop();
-      return false;
+      this.props.navigator.pop();
+      return true;
     }
   }
   onShouldStartLoadWithRequest = (event) => {
@@ -55,13 +55,13 @@ export default class CommonWebView extends Component {
    * 加载开始
    */
   onLoadStart = () => {
-    showLoading();
+    // showLoading();
   }
   /**
    * 加载结束
    */
   onLoadEnd = () => {
-    hideToast();
+    // hideToast();
   }
   /**
    * 加载成功
@@ -99,15 +99,16 @@ export default class CommonWebView extends Component {
   }
 
   componentWillUnmount() {
-    hideToast();
+    // hideToast();
     // BackHandler.removeEventListener('hardwareBackPress', this.onBackPage);
   }
 
   componentDidDisappear() {
-    hideToast();
+    // hideToast();
   }
 
   render() {
+
     let uri = this.getUrlFromParams();
     return (
       <WebView
@@ -119,6 +120,7 @@ export default class CommonWebView extends Component {
         domStorageEnabled={true}
         decelerationRate="normal"
         onNavigationStateChange={this.handlerOnNavigationStateChange}
+        onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
         startInLoadingState={true}
         scalesPageToFit={true}
         onLoadStart={this.onLoadStart}
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   errorViewText: {
-    color: theme.BASE_FONT_COLOR,
+    color: theme.DARK_COLOR_LEVEL_3,
     fontSize: px(30),
     textAlign: 'center',
     marginTop: 30

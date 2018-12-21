@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 export default class BaseComponent extends Component {
-	static setTypeProps(options) {
-		this.typeProps = options;
-	};
+  static setTypeProps(options) {
+    this.typeProps = options;
+  };
 
-	static getTypeProps() {
-		return this.typeProps || {};
-	}
+  static getTypeProps() {
+    return this.typeProps || {};
+  }
 }

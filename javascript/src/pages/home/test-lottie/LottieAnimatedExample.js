@@ -1,16 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import {
-  View,
-  Animated,
-  Easing,
-  StyleSheet,
-  Slider,
-  Switch,
-  Image,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { Animated, Easing, Image, Slider, StyleSheet, Switch, Text, TouchableOpacity, View, Platform } from 'react-native';
 import LottieView from 'lottie-react-native';
 import ExamplePicker from './ExamplePicker';
 
@@ -33,6 +23,7 @@ const EXAMPLES = [
   makeExample('Twitter Heart', () => require('./animations/TwitterHeart.json')),
   makeExample('Watermelon', () => require('./animations/Watermelon.json')),
   makeExample('Motion Corpse', () => require('./animations/MotionCorpse-Jrcanest.json')),
+  makeExample('Jun Jun Demo', () => require('./animations/lljdata.json')),
 ];
 
 export default class LottieAnimatedExample extends React.Component {
@@ -76,14 +67,12 @@ export default class LottieAnimatedExample extends React.Component {
   onProgressChange = progress => this.state.progress.setValue(progress);
   onDurationChange = duration => this.setState({ duration });
 
-  setAnim = anim => {
-    this.anim = anim;
-  };
+  setAnim = anim => this.anim = anim;
 
   render() {
     const { duration, isPlaying, isInverse, progress, loop, example } = this.state;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: Platform.OS === 'android' ? 20 : 0, paddingBottom: 30 }}>
         <ExamplePicker
           example={example}
           examples={EXAMPLES}
@@ -92,7 +81,7 @@ export default class LottieAnimatedExample extends React.Component {
             this.setState({ example: EXAMPLES[index] });
           }}
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1F1F1' }}>
           <LottieView
             ref={this.setAnim}
             autoPlay={!progress}
@@ -130,14 +119,11 @@ export default class LottieAnimatedExample extends React.Component {
               />
             </TouchableOpacity>
             <TouchableOpacity onPress={this.onInversePress}>
-              <Image style={styles.controlsIcon} resizeMode="contain" source={inverseIcon} />
+              <Image style={styles.controlsIcon} resizeMode="contain" source={inverseIcon}/>
             </TouchableOpacity>
           </View>
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}
-          >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
             <Text>Use Imperative API:</Text>
-            <View />
             <Switch
               onValueChange={i => {
                 this.stopAnimation();
@@ -149,9 +135,7 @@ export default class LottieAnimatedExample extends React.Component {
             />
           </View>
           <View style={{ paddingBottom: 10 }}>
-            <View>
-              <Text>Progress:</Text>
-            </View>
+            <Text>Progress:</Text>
             <AnimatedSlider
               minimumValue={0}
               maximumValue={1}
@@ -161,9 +145,7 @@ export default class LottieAnimatedExample extends React.Component {
             />
           </View>
           <View>
-            <View>
-              <Text>Duration: ({Math.round(duration)}ms)</Text>
-            </View>
+            <Text>Duration: ({Math.round(duration)}ms)</Text>
             <Slider
               step={50}
               minimumValue={50}

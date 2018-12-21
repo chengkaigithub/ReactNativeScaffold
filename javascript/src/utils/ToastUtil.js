@@ -2,11 +2,10 @@
  * Created by chengkai on 2017/11/30.
  * toast 提示统一管理类
  */
-import Toast from "../components/toast";
-import { LOADING } from "../config/string.conf";
+import { Toast } from "../components";
 
 /* 展示loading框 */
-export const showLoading = (info = LOADING, duration = 10) => {
+export const showLoading = (info = undefined, duration = 10) => {
   Toast.loading(info, duration);
 };
 

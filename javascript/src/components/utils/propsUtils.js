@@ -3,5 +3,5 @@
  */
 
 const setDefaultProps = options => {
-	
+
 }

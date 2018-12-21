@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { deviceHeight, deviceWidth, isIphoneX, isLessThanAndroid6, px } from '../../utils/ScreenUtil';
-import { HOME_PAGE } from '../../config/string.conf';
+import {
+  BIND_MERCHANT,
+  COUPON,
+  HOME_PAGE,
+  INSTALL_MACHINE,
+  MERCHANT_AUTH,
+  NOT_BIND_MERCHANT_HINT,
+  QUOTA_MANAGER
+} from '../../config/string.conf';
 import * as theme from "../../config/theme.conf";
-import { showLoading, showToast } from "../../utils/ToastUtil";
+import { hideToast, showLoading, showToast } from "../../utils/ToastUtil";
 import fontUri from "../../utils/FontUtil";
 import CommonWebView from "../common/CommonWebView";
 import { BarStyleDarkContent, RESULT_OK } from "react-native-navigation-hybrid";
@@ -12,7 +20,6 @@ import { connect } from "react-redux";
 import fetch from '../../sx-fetch';
 import { HOME_PAGE_LOGIN_REQUEST_CODE } from "../../../global-config";
 import { event } from '../../components';
-import LottieAnimatedExample from "./test-lottie/LottieAnimatedExample";
 
 
 const ON_COMPONENT_RESULT = 'ON_COMPONENT_RESULT';
@@ -31,6 +38,10 @@ export default class HomePage extends Component {
       title: HOME_PAGE,
       icon: { uri: fontUri('FontAwesome', 'location-arrow', 24) },
       hideTabBarWhenPush: true,
+      titlePositionAdjustment: {
+        titlePositionAdjustmentH: 0,
+        titlePositionAdjustmentV: -3
+      }
     },
   };
 
@@ -108,40 +119,40 @@ export default class HomePage extends Component {
     return (
       <ScrollView contentContainerStyle={styles.headerStyle}>
         <View>
-        {/*<View style={styles.bannerContainerStyle}>*/}
-          {/*<View style={styles.statusBarPlaceHolderStyle}/>*/}
-          {/*<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>*/}
-            {/*<Text style={styles.bindMerchantTextStyle}*/}
-                  {/*onPress={this.jumpToBindMerchant}>{BIND_MERCHANT}</Text>*/}
-            {/*<Text numberOfLines={1}*/}
-                  {/*style={styles.bindMerchantNameTextStyle}>{!!this.state.bindMerchantName ? this.state.bindMerchantName : NOT_BIND_MERCHANT_HINT}</Text>*/}
-          {/*</View>*/}
-          {/*<Image source={require('../../assets/images/home/home_bannner.png')}*/}
-                 {/*style={styles.bannerImageStyle}/>*/}
-        {/*</View>*/}
-        {/*<View style={styles.funListContainerStyle}>*/}
-          {/*<TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToCoupon}>*/}
-            {/*<Image source={require('../../assets/images/home/home_coupon.png')}*/}
-                   {/*style={styles.funIconStyle}/>*/}
-            {/*<Text style={styles.funTextStyle}>{COUPON}</Text>*/}
-          {/*</TouchableOpacity>*/}
-          {/*<TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToQuotaManager}>*/}
-            {/*<Image source={require('../../assets/images/home/home_quota_manage.png')}*/}
-                   {/*style={styles.funIconStyle}/>*/}
-            {/*<Text style={styles.funTextStyle}>{QUOTA_MANAGER}</Text>*/}
-          {/*</TouchableOpacity>*/}
-          {/*<TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToMerchantAuth}>*/}
-            {/*<Image source={require('../../assets/images/home/home_merchant_auth.png')}*/}
-                   {/*style={styles.funIconStyle}/>*/}
-            {/*<Text style={styles.funTextStyle}>{MERCHANT_AUTH}</Text>*/}
-          {/*</TouchableOpacity>*/}
-          {/*<TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToInstallMachine}>*/}
-            {/*<Image source={require('../../assets/images/home/home_install_machine.png')}*/}
-                   {/*style={styles.funIconStyle}/>*/}
-            {/*<Text style={styles.funTextStyle}>{INSTALL_MACHINE}</Text>*/}
-          {/*</TouchableOpacity>*/}
-        {/*</View>*/}
-          <LottieAnimatedExample/>
+          <View style={styles.bannerContainerStyle}>
+            <View style={styles.statusBarPlaceHolderStyle}/>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={styles.bindMerchantTextStyle}
+                    onPress={this.jumpToBindMerchant}>{BIND_MERCHANT}</Text>
+              <Text numberOfLines={1}
+                    style={styles.bindMerchantNameTextStyle}>{!!this.state.bindMerchantName ? this.state.bindMerchantName : NOT_BIND_MERCHANT_HINT}</Text>
+            </View>
+            <Image source={require('../../assets/images/home/home_bannner.png')}
+                   style={styles.bannerImageStyle}/>
+          </View>
+          <View style={styles.funListContainerStyle}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToCoupon}>
+              <Image source={require('../../assets/images/home/home_coupon.png')}
+                     style={styles.funIconStyle}/>
+              <Text style={styles.funTextStyle}>{COUPON}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToQuotaManager}>
+              <Image source={require('../../assets/images/home/home_quota_manage.png')}
+                     style={styles.funIconStyle}/>
+              <Text style={styles.funTextStyle}>{QUOTA_MANAGER}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToMerchantAuth}>
+              <Image source={require('../../assets/images/home/home_merchant_auth.png')}
+                     style={styles.funIconStyle}/>
+              <Text style={styles.funTextStyle}>{MERCHANT_AUTH}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} style={styles.funListItemStyle} onPress={this.jumpToInstallMachine}>
+              <Image source={require('../../assets/images/home/home_install_machine.png')}
+                     style={styles.funIconStyle}/>
+              <Text style={styles.funTextStyle}>{INSTALL_MACHINE}</Text>
+            </TouchableOpacity>
+          </View>
+          {/*<LottieAnimatedExample/>*/}
         </View>
       </ScrollView>
     );
@@ -150,8 +161,7 @@ export default class HomePage extends Component {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    width: deviceWidth,
-    height: deviceHeight,
+    flex: 1,
     alignItems: 'center',
     backgroundColor: theme.PAGE_BG_COLOR,
   },
@@ -192,7 +202,7 @@ const styles = StyleSheet.create({
   funTextStyle: {
     fontSize: px(23),
     marginTop: px(17),
-    color: theme.BASE_FONT_COLOR
+    color: theme.COLOR_PRIMARY
   },
   todayTradeContainerStyle: {
     flexDirection: 'column',
@@ -209,13 +219,13 @@ const styles = StyleSheet.create({
   blueIconStyle: {
     width: px(7),
     height: px(23),
-    backgroundColor: theme.COLOR_TAB_BAR_BLUE,
+    backgroundColor: theme.COLOR_PRIMARY,
     margin: px(30),
     marginRight: px(15)
   },
   todayTradeTextStyle: {
     fontSize: px(30),
-    color: theme.COLOR_LIGHT_BLACK,
+    color: theme.TAB_TINT_COLOR,
     fontWeight: 'bold'
   },
   todayTradeInfoContainerStyle: {
@@ -246,32 +256,32 @@ const styles = StyleSheet.create({
   },
   tradeInfoContainerStyle: {
     flex: 1,
-    backgroundColor: theme.COLOR_BLUE_GRAY,
+    backgroundColor: theme.COLOR_PRIMARY,
     justifyContent: 'center',
     alignItems: 'center'
   },
   tradeInfoTextStyle: {
     fontSize: px(24),
-    color: theme.COLOR_DEEP_BLUE,
+    color: theme.COLOR_PRIMARY,
     marginBottom: px(14)
   },
   detailTextStyle: {
     fontSize: px(48),
-    color: theme.COLOR_DEEP_BLUE,
+    color: theme.COLOR_PRIMARY,
     fontWeight: 'bold'
   },
   cornerTextStyle: {
     fontSize: px(20),
-    color: theme.COLOR_DEEP_BLUE
+    color: theme.COLOR_PRIMARY
   },
   bindMerchantTextStyle: {
     margin: px(30),
-    color: theme.COLOR_TAB_BAR_BLUE,
+    color: theme.COLOR_PRIMARY,
     fontSize: px(30)
   },
   bindMerchantNameTextStyle: {
     margin: px(30),
-    color: theme.FONT_LIGHT_COLOR,
+    color: theme.COLOR_PRIMARY,
     fontSize: px(30),
     maxWidth: px(500)
   },
